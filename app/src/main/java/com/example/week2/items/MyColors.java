@@ -1,18 +1,13 @@
 package com.example.week2.items;
 
 import android.content.Context;
-
-
 import androidx.core.content.ContextCompat;
-
 import com.example.week2.R;
-
 import java.util.ArrayList;
 
 public class MyColors {
+
     public static int provideColorByName(String color, Context contextForProvideColor){
-
-
         switch (color){
             case "RED":
                 return ContextCompat.getColor(contextForProvideColor, R.color.red);
@@ -30,6 +25,7 @@ public class MyColors {
                 return ContextCompat.getColor(contextForProvideColor, R.color.white);
         }
     }
+
     public static int provideDarkColorByName(String color, Context contextForProvideDarkColor){
         switch (color){
             case "RED":
@@ -60,9 +56,8 @@ public class MyColors {
         temp.add("WHITE");
         return temp;
     }
+
     public static int provideColorByName(String color){
-
-
         switch (color){
             case "RED":
                 return  R.color.red;
@@ -80,7 +75,5 @@ public class MyColors {
                 return  R.color.white;
         }
     }
-
-
 
 }

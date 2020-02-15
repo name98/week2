@@ -7,26 +7,22 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.week2.R;
 import com.example.week2.database.DataBaseHelper;
-
 import com.example.week2.items.MyColors;
 import com.example.week2.items.NoteItem;
 import com.example.week2.control.Router;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ItemHolder> {
 
     private ArrayList<NoteItem> notes=new ArrayList<>();
+
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,11 +38,7 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ItemHo
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         NoteItem note = notes.get(position);
-        holder.setDecryption(note.getDescription());
-        holder.setPaneColor(note.getColor());
-        holder.setTitle(note.getTitle());
-        holder.setPaneListener(position);
-        holder.initPin(position);
+        holder.bind(note,position);
     }
 
     @Override
@@ -60,47 +52,49 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ItemHo
     }
 
     class ItemHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.noteItemTitleTextView)
-        TextView title;
-        @BindView(R.id.noteItemDescriptionTextView)
-        TextView decryption;
-        @BindView(R.id.noteItemPaneCardView)
-        CardView pane;
-        @BindView(R.id.noteItemDeleteNoteImageView)
-        ImageView deleteNote;
-        @BindView(R.id.noteItemPinNoteImageView)
-        ImageView pinNote;
-        @BindView(R.id.noteItemCopyNoteImageView)
-        ImageView copyNote;
 
+        @BindView(R.id.noteItemTitleTextView)
+        TextView titleTextView;
+        @BindView(R.id.noteItemDescriptionTextView)
+        TextView descriptionTextView;
+        @BindView(R.id.noteItemPaneCardView)
+        CardView paneCardView;
+        @BindView(R.id.noteItemDeleteNoteImageView)
+        ImageView deleteNoteImageView;
+        @BindView(R.id.noteItemPinNoteImageView)
+        ImageView pinNoteImageView;
+        @BindView(R.id.noteItemCopyNoteImageView)
+        ImageView copyNoteImageView;
 
         ItemHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
-        void setPaneColor(String color){
-            pane.setCardBackgroundColor(MyColors.provideColorByName(color,itemView.getContext()));
+
+        private void setPaneColor(String color){
+            paneCardView.setCardBackgroundColor(MyColors.provideColorByName(color,itemView.getContext()));
             FrameLayout topBorderFrameLayout = itemView.findViewById(R.id.noteItemBorderColorFrameLayout);
             topBorderFrameLayout.setBackgroundColor(MyColors.provideDarkColorByName(color,itemView.getContext()));
         }
-        void initPin(int id){
-            pinNote.setImageResource(R.drawable.ic_unpined);
-            if(notes.get(id).isSignificance())
-                pinNote.setImageResource(R.drawable.ic_pined);
-        }
-        void setPaneListener(final int id){
-            Context context = itemView.getContext();
-            pane.setOnClickListener(v -> Router.addEditFragmentEditModeNewNoteMode(context,notes.get(id).getId()));
 
-            copyNote.setOnClickListener(v -> {
+        private void initPin(int id){
+            pinNoteImageView.setImageResource(R.drawable.ic_unpined);
+            if(notes.get(id).isSignificance())
+                pinNoteImageView.setImageResource(R.drawable.ic_pined);
+        }
+
+        private void setPaneListener(final int id){
+            Context context = itemView.getContext();
+            paneCardView.setOnClickListener(v -> Router.addEditFragmentEditModeNewNoteMode(context,notes.get(id).getId()));
+            copyNoteImageView.setOnClickListener(v -> {
                 DataBaseHelper.insert(itemView.getContext(),notes.get(id));
                 reLoadFragment();
             });
-            deleteNote.setOnClickListener(v -> {
+            deleteNoteImageView.setOnClickListener(v -> {
                 DataBaseHelper.deleteNote(context, notes.get(id));
                 reLoadFragment();
             });
-            pinNote.setOnClickListener(v -> {
+            pinNoteImageView.setOnClickListener(v -> {
                 NoteItem note = notes.get(id);
                 note.setSignificance(!notes.get(id).isSignificance());
                 DataBaseHelper.upDate(context,note);
@@ -108,15 +102,25 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ItemHo
             });
         }
 
-        void setTitle(String text){
-            title.setText(text);
-        }
-        void setDecryption(String text){
-            decryption.setText(text);
+        private void setTitleTextView(String text){
+            titleTextView.setText(text);
         }
 
-        void reLoadFragment(){
+        private void setDescriptionTextView(String text){
+            descriptionTextView.setText(text);
+        }
+
+        private void reLoadFragment(){
             Router.reloadMainFragment(itemView.getContext());
         }
+
+        void bind(NoteItem note, int position){
+            setTitleTextView(note.getTitle());
+            setPaneListener(position);
+            setPaneColor(note.getColor());
+            setDescriptionTextView(note.getDescription());
+            initPin(position);
+        }
+
     }
 }

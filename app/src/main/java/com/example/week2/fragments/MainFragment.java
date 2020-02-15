@@ -6,35 +6,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import com.example.week2.R;
 import com.example.week2.adapters.NoteItemAdapter;
 import com.example.week2.database.DataBaseHelper;
-
 import com.example.week2.control.Router;
-
-
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainFragment extends Fragment {
 
-    private static final String ARGUMENT_DATABASE_STATE = "StateKey";
-
+    public static final String ARGUMENT_DATABASE_STATE = "StateKey";
     @BindView(R.id.mainFragmentNotesRecycleView)
     public RecyclerView notesRecycleView;
     @BindView(R.id.mainFragmentAddNewNoteButton)
     public Button newNoteButton;
     private Unbinder unBinder = null;
-
 
     @Nullable
     @Override
@@ -60,7 +52,7 @@ public class MainFragment extends Fragment {
 
     private void initRecycleView() {
         NoteItemAdapter noteItemAdapter = new NoteItemAdapter();
-        noteItemAdapter.setNotes(DataBaseHelper.getNotes(getContext()));
+        noteItemAdapter.setNotes(DataBaseHelper.getSortedNotes(getContext()));
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         notesRecycleView.setAdapter(noteItemAdapter);
         notesRecycleView.setLayoutManager(layoutManager);

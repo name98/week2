@@ -1,20 +1,16 @@
 package com.example.week2.database;
 
-
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import androidx.annotation.Nullable;
-
 import com.example.week2.items.NoteItem;
-
 import java.util.ArrayList;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "NOTES_DB";
     private static final String TABLE_NAME = "NOTES_TABLE";
@@ -45,7 +41,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public static void  insert(Context contextForInsertNote, NoteItem note) {
+    public static void insert(Context contextForInsertNote, NoteItem note) {
         DataBaseHelper helper = new DataBaseHelper(contextForInsertNote);
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues insertValues = new ContentValues();
@@ -67,8 +63,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, updateValues, PRIMARY_KEY + "=" + note.getId(), null);
         db.close();
     }
-
-
 
     public static ArrayList<NoteItem> getNotes(Context contextForDataBase) {
         DataBaseHelper helper = new DataBaseHelper(contextForDataBase);
@@ -94,7 +88,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return notes;
     }
 
-    public static void deleteNote(Context contextForDeleteNote, NoteItem  note) {
+    public static void deleteNote(Context contextForDeleteNote, NoteItem note) {
         DataBaseHelper helper = new DataBaseHelper(contextForDeleteNote);
         SQLiteDatabase db = helper.getReadableDatabase();
         db.delete(TABLE_NAME, PRIMARY_KEY + " = " + note.getId(), null);
@@ -102,7 +96,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static ArrayList<NoteItem> getSortedNotes(Context contextForSortingNotes) {
         DataBaseHelper helper = new DataBaseHelper(contextForSortingNotes);
-
         ArrayList<NoteItem> significanceNotes = helper.getPinedNotes();
         ArrayList<NoteItem> unSignificanceNotes = helper.getUnPinedNotes();
         ArrayList<NoteItem> notes = new ArrayList<>();
@@ -111,7 +104,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         for (int i = unSignificanceNotes.size() - 1; i > -1; i--)
             notes.add(unSignificanceNotes.get(i));
-
         return notes;
     }
 
@@ -157,20 +149,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return notes;
     }
 
-    public static boolean isEmpty(Context contextForDataBase){
+    public static boolean isEmpty(Context contextForDataBase) {
         return getNotes(contextForDataBase).size() == 0;
     }
-    public static NoteItem getNoteById(Context contextForProvide, int noteId){
+
+    public static NoteItem getNoteById(Context contextForProvide, int noteId) {
         DataBaseHelper helper = new DataBaseHelper(contextForProvide);
         return helper.provideNoteItemById(noteId);
     }
 
-
-    private NoteItem provideNoteItemById(int noteId){
+    private NoteItem provideNoteItemById(int noteId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM "
-                + TABLE_NAME + " where "+PRIMARY_KEY
-                +"="+noteId + " ;", null);
+                + TABLE_NAME + " where " + PRIMARY_KEY
+                + "=" + noteId + " ;", null);
         NoteItem note = new NoteItem();
         if (cursor.moveToFirst()) {
             note.setId(cursor.getInt(0));
@@ -184,8 +176,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return note;
-
     }
-
 
 }

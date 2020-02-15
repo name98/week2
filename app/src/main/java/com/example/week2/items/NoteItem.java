@@ -6,7 +6,6 @@ public class NoteItem {
     private String description;
     private String color;
     private boolean significance;
-
     private int id;
 
     public void setTitle(String title) {
@@ -40,6 +39,7 @@ public class NoteItem {
     public boolean isSignificance() {
         return significance;
     }
+
     public int getSignificance(){
         if(significance)
             return 1;

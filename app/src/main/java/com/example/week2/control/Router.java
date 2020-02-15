@@ -1,16 +1,13 @@
 package com.example.week2.control;
 
 import android.content.Context;
-
+import android.os.Bundle;
 import androidx.fragment.app.FragmentManager;
-
 import com.example.week2.MainActivity;
 import com.example.week2.R;
 import com.example.week2.database.DataBaseHelper;
 import com.example.week2.fragments.EditFragment;
 import com.example.week2.fragments.MainFragment;
-
-
 
 public class Router {
 
@@ -43,19 +40,23 @@ public class Router {
     public static void reloadMainFragment(Context contextForReloadFragment) {
         FragmentManager manager = ((MainActivity) contextForReloadFragment).getSupportFragmentManager();
         MainFragment mainFragment = (MainFragment) manager.findFragmentByTag("MainFragment");
+        Bundle arguments = new Bundle();
+        arguments.putBoolean(MainFragment.ARGUMENT_DATABASE_STATE, DataBaseHelper.isEmpty(contextForReloadFragment));
         assert mainFragment != null;
+        mainFragment.setArguments(arguments);
         manager.beginTransaction()
                 .detach(mainFragment)
                 .attach(mainFragment)
                 .commit();
-
     }
+
     public static void reloadEditFragment(Context contextForReloadFragment, String color){
         FragmentManager manager = ((MainActivity) contextForReloadFragment).getSupportFragmentManager();
         EditFragment editFragment = (EditFragment) manager.findFragmentByTag("EditFragment");
         assert editFragment != null;
         editFragment.reloadColorsNoteItem(color);
     }
+
     public static void start(Context contextForStart){
         addMainFragment(contextForStart);
     }
