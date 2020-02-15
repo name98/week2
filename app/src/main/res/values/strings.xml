@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">week2</string>
+    <string name="new_text">+</string>
+    <string name="Title">Название</string>
+    <string name="Decryption">Заметка</string>
+    <string name="delete">Delete</string>
+    <string name="pinning">pinning</string>
+    <string name="emptyText">Нет записей</string>
+    <string name="basket">Козина</string>
+    <string name="archive">Архив</string>
+    <string name="reminders">Напоминания</string>
+    <string name="notes">Заметки</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
+    <string name="color">COLOR</string>
+</resources>

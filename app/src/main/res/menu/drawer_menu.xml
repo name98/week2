@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuBasket"
+        android:title="@string/basket"
+        android:icon="@drawable/ic_delete_black_24dp"/>
+    <item
+        android:id="@+id/menuArchive"
+        android:title="@string/archive"
+        android:icon="@drawable/ic_archive_black_24dp"/>
+    <item
+        android:id="@+id/menuReminders"
+        android:title="@string/reminders"
+        android:icon="@drawable/ic_notifications_black_24dp"/>
+    <item
+        android:id="@+id/menuNotes"
+        android:title="@string/notes"
+        android:icon="@drawable/ic_note_black_24dp"/>
+</menu>

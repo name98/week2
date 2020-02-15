@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:clickable="true"
+    android:focusable="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_above="@id/editFragmentBottomPaneFrameLayout"
+        android:id="@+id/editFragmentMainPaneLinerLayout">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editFragmentEditTitleEditText"
+            style="@style/Title"
+            android:background="@null"
+            android:layout_margin="10dp"
+            android:hint="@string/Title"
+            tools:ignore="Autofill,TextFields" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editFragmentEditDecryptionEditText"
+            android:hint="@string/Decryption"
+            style="@style/Description"
+            android:layout_margin="10dp"
+            android:background="@null"
+            tools:ignore="Autofill,TextFields" />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:elevation="5dp"
+        android:background="@color/white"
+        android:id="@+id/editFragmentBottomPaneFrameLayout">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/editFragmentColorPaletteRecycleView"/>
+    </FrameLayout>
+
+</RelativeLayout>
